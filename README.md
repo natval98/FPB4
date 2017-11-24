@@ -9,8 +9,8 @@ sumber:
 
 3. mv, mv * = (..., ...) 
 sumber:
-4. touch =  
-sumber:
+4. touch =  nat
+sumber: https://svnweb.freebsd.org/base/release/9.1.0/usr.bin/touch/touch.c?revision=243808&view=co
 
 5. rm, rm -rf = (Rafi , ...) 
 sumber:
