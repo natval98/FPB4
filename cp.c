@@ -13,13 +13,14 @@ int main (int argc, char *argv[])
 		exit();
 	}
 
-//	for ( i = 1; i < argc; i++){
 		if ((fd0 = open (argv[1], O_RDONLY)) < 0){
 			printf(1, "cp: cannot open %s\n", argv[1]);
+			exit();
 		}
 
 		if ((fd1 = open (argv[2], O_CREATE|O_RDWR)) < 0){
 			printf(1, "cp: cannot open %s\n", argv[2]);
+			exit();
 		}
 	
 	while ( ( n = read (fd0, buf, sizeof(buf) ) ) > 0 ){
