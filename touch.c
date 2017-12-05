@@ -6,14 +6,16 @@
 
 int main( int argc, char *argv[])
 {
-	int f;
+	int f, i;
 	if (argc < 2){
-		printf(2, "Need 2 arguments, Touch [file]");
+		printf(2, "Need minimum 2 arguments, Touch [files]\n");
 		exit();
 	}
-	if (( f = open(argv[1], O_CREATE | O_RDWR)) < 0){
-		printf(1, "touch: %s failed to create\n", argv[1]);
+	for (i = 1; i < argc; i++){
+		if (( f = open(argv[i], O_CREATE | O_RDWR)) < 0){
+			printf(1, "touch: %s failed to create\n", argv[i]);
+		}
+		close(f);
 	}
-	close(f);
 	exit();
 }
