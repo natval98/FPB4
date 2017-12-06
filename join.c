@@ -30,11 +30,13 @@ int main(int argc, char *argv[])
 	}
 
 	if ((fd0 = open (argv[1], O_RDONLY)) < 0){
-			printf(1, "join : cannot open %s\n", argv[1]);
+		printf(1, "join : cannot open %s\n", argv[1]);
+		exit();
 	}
 
 	if ((fd1 = open (argv[2], O_RDONLY)) < 0){
 		printf(1, "join: cannot open %s\n", argv[2]);
+		exit();
 	}
 	
 	while ( ( n = read (fd0, str1, sizeof(str1) ) ) > 0 ) {}
