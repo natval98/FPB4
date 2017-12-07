@@ -1,7 +1,6 @@
 #include <syscall.h>
 #include <stdio.h>
 #include <string.h>
-
 #include <xv6/stdio.h>
 #include <xv6/dirent.h>
 #include <xv6/stat.h>
