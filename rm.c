@@ -25,21 +25,26 @@ int type_file (char * file)
   {
     return salah;
   }
-  if (status.type == T_FILE)
+  if (status.type == T_FILE) //target berbentuk file
   {
     return file;
   }
-  else if (status.type == T_DIR)
+  else if (status.type == T_DIR) // target berbentuk folder
   {
-    return dir;
+    return dir; 
   }
-  else 
+  else  
     return salah;
  )
 
+ void rekursif (char * file)
+ {
+   
 
 
-
+ 
+   
+ }
 int
 main(int argc, char *argv[])
 {
