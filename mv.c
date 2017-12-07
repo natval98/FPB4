@@ -42,18 +42,18 @@ int main(int argc, char *argv[])
 	else if (st.type == T_FILE && (fd2 < 0))
 {
 	close(fd2);
-	printf(1, "Masuke ke file & dir\n");
+//	printf(1, "Masuke ke file & dir\n");
 	char com[128] = {};
 	int len1 = strlen(argv[1]);
 	int len2 = strlen(argv[2]);
-	printf(1, "%c %c panjang=%d\n",argv[2][len2-1], argv[2][len2],len2);
+//	printf(1, "%c %c panjang=%d\n",argv[2][len2-1], argv[2][len2],len2);
 	if (argv[2][len2-1] != '/'){
 		char new2[128]= {};
 		strcpy(new2,argv[2]);
 		new2[len2] ='/';
-		printf(1,"newd %s\n",new2);	
+//		printf(1,"newd %s\n",new2);	
 		strcpy(com,new2);
-		printf(1, "destifsatu = %s\n",com);
+//	printf(1, "destifsatu = %s\n",com);
 
 			int i = len1 - 1;
 			for (; i >= 0; i--)
@@ -61,8 +61,8 @@ int main(int argc, char *argv[])
 					break;
 			i++;
 			strcpy(&com[++len2], &argv[1][i]);
-			printf(1, "destifsatu = %s\n",com);
-		printf(1, "destifsatu = %s\n",com);
+//			printf(1, "destifsatu = %s\n",com);
+//		printf(1, "destifsatu = %s\n",com);
 	}
 	
 	else if (argv[2][len2-1] == '/')
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 				break;
 		i++;
 		strcpy(&com[len2], &argv[1][i]);
-		printf(1,"destfolder = %s\n",com);
+//		printf(1,"destfolder = %s\n",com);
 	}
 	
 	int fd_dest = open(com, O_WRONLY|O_CREATE);
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 	else if (st.type == T_FILE && st2.type == T_FILE && fd2>=0)
 	{
 		close(fd2);
-		printf(1, "Masuk ke file & file\n");
+//		printf(1, "Masuk ke file & file\n");
 		int fd_dest;
 		if ( (fd_dest = open (argv[2], O_CREATE | O_RDWR) ) < 0){
 			printf(1, "mv: cannot open dest %s\n",argv[2]);
