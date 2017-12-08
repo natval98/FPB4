@@ -10,31 +10,36 @@
 
 int type_file (char * file)
 {
-  int salah=-1;
-  int file=1;
-  int dir=0;
   struct stat status;
   int fh; //file handler
   fh = open (file,O_RDONLY);
   if (fh <= -1) // bukan file & tidak bisa di open
   {
-    return salah;
+    return -1;
   }
-  if(fstat(fd, &status) < 0) //tidak bisa dibuka dan status tidak bisa di lihat
+  if(fstat(fh, &status) < 0) //tidak bisa dibuka dan status tidak bisa di lihat
   {
-    return salah;
+    return -1;
   }
   if (status.type == T_FILE) //target berbentuk file
   {
-    return file;
+    return 1;
   }
   else if (status.type == T_DIR) // target berbentuk folder
   {
-	return dir; 
+	return 0; 
   }
   else  //apabila terjadi hal yang diluar dugaan
-    return salah;
- )
+    return -1;
+}
+
+void deletes (char * argv)
+{
+    if(unlink(argv) < 0) //dihapus
+  				{
+  					printf("rm: failed to delete:%s\n", argv);
+  				}
+}
 
  void rekursif (char * file)
  {
@@ -43,7 +48,7 @@ int type_file (char * file)
  	if (fh<0) //jika tidak dapat dibuka
  	{
  		printf("cant open the file %s \n",file);
- 		return
+ 		return;
 	}
 	char * chscanner;// untuk melihat akhiran dari source
 	struct dirent scanner;//melihat isi dari sebuah folder
@@ -55,22 +60,18 @@ int type_file (char * file)
 			continue;
 			
 		chscanner= temp_read + strlen(temp_read);
-    	if (*chscanner != '/') strcat(temp_read, "/"); // menambah garing apa bila di akhir tidak ada karena dapat menyebab kan error
+    	if (*chscanner != '/') strcat(temp_read, "/"); // menambah garing apa bila di akhir tidak ada karena dapat menyebakan 
+                strcat(temp_read, scanner.d_name);//menambah nama file di akhir nama alamat
     	
-		strcat(temp_read, scanner.d_name);//menambah nama file di akhir nama alamat
-    	
-		int target=tipe_file (temp_read);// mengetest apa kah target berbentuk file atau folder
+		int target=type_file (temp_read);// mengetest apa kah target berbentuk file atau folder
 		
 		if (target == 0)// berarti folder
 		{
-			rekursif(temp_read)//melakukan chek ke dalam folder;
+			rekursif(temp_read);//melakukan chek ke dalam folder;
 		}
 		else if (target==1)//berarti file
 		{
-			if(unlink(argv) < 0) //dihapus
-  				{
-  					printf("rm: failed to delete:%s\n", argv);
-  				}
+			deletes(temp_read);
 		}
 		
 		else //jika target dituju
@@ -104,8 +105,7 @@ int main(int argc, char *argv[])
   
   for(i = 1; i < argc; i++){
     if(unlink(argv[i]) < 0){
-      printf("rm: %s failed\n", argv[i]);
-      break;
+      deletes(argv[i]);
     }
   }
   sysexit();
