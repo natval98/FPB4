@@ -56,23 +56,36 @@ int type_file (char * file)
 			continue;
 			
 		chscanner= temp_read + strlen(temp_read);
-    	if (*chscanner != '/') strcat(temp_read, "/");
-    	strcat(temp_read, scanner.d_name);
+    	if (*chscanner != '/') strcat(temp_read, "/"); // menambah garing apa bila di akhir tidak ada karena dapat menyebab kan error
     	
-		int test=test_dir (temp_read);
+		strcat(temp_read, scanner.d_name);//menambah nama file di akhir nama alamat
     	
+		int target=tipe_file (temp_read);// mengetest apa kah target berbentuk file atau folder
 		
-	
-	
-	
+		if (target == 0)// berarti folder
+		{
+			rekursif(temp_read)//melakukan chek ke dalam folder;
+		}
+		else if (target==1)//berarti file
+		{
+			if(unlink(argv) < 0)
+  				{
+  					printf("rm: failed to delete:%s\n", argv);
+  				}
+			
+		}
+		
+		else 
+		{
+			printf("failed to open or stat\n");
+		}
+    
 	}
-	
-   
-
-
- 
-   
- }
+	if(unlink(file)<0)
+	{
+		printf ("failed to delete %s\n", temp_read);
+	}
+}
  
  
 int main(int argc, char *argv[])
