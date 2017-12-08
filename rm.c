@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 #include <xv6/stdio.h>
 #include <xv6/dirent.h>
 #include <xv6/stat.h>
@@ -16,7 +15,7 @@ int type_file (char * file)
   int dir=0;
   struct stat status;
   int fh; //file handler
-  fh = open (file,o_RDONLY);
+  fh = open (file,O_RDONLY);
   if (fh <= -1) // bukan file & tidak bisa di open
   {
     return salah;
@@ -33,13 +32,13 @@ int type_file (char * file)
   {
 	return dir; 
   }
-  else  
+  else  //apabila terjadi hal yang diluar dugaan
     return salah;
  )
 
  void rekursif (char * file)
  {
- 	int fg;
+ 	int fh;
  	fh = open (file,0); //bisa dibuka dan diedit
  	if (fh<0) //jika tidak dapat dibuka
  	{
@@ -48,8 +47,8 @@ int type_file (char * file)
 	}
 	char * chscanner;// untuk melihat akhiran dari source
 	struct dirent scanner;//melihat isi dari sebuah folder
-	char temp_read [1024];//
-	while(read(fd,&scanner,sizeof(scanner))== sizeof(scanner))
+	char temp_read [1024];//sebagai alamat sementara
+	while(read(fh,&scanner,sizeof(scanner))== sizeof(scanner)) 
 	{
 		strcpy(temp_read,file);
 		if (strcmp(scanner.d_name, ".") ==0 || strcmp(scanner.d_name, "..") ==0)	
@@ -68,14 +67,13 @@ int type_file (char * file)
 		}
 		else if (target==1)//berarti file
 		{
-			if(unlink(argv) < 0)
+			if(unlink(argv) < 0) //dihapus
   				{
   					printf("rm: failed to delete:%s\n", argv);
   				}
-			
 		}
 		
-		else 
+		else //jika target dituju
 		{
 			printf("failed to open or stat\n");
 		}
@@ -93,12 +91,20 @@ int main(int argc, char *argv[])
   int i;
 
   if(argc == 1 ){
-    printf("Usage: rm files...\n");
+    printf("rm ?\n");
     sysexit();
   }
+  
+  if (strcmp(argv[1],"-rf")==0)
+  {
+  	//printf("delete all");
+    rekursif(argv[2]);
+    sysexit();
+  }
+  
   for(i = 1; i < argc; i++){
     if(unlink(argv[i]) < 0){
-      printf("rm: %s failed to delete\n", argv[i]);
+      printf("rm: %s failed\n", argv[i]);
       break;
     }
   }
