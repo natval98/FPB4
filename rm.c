@@ -31,7 +31,7 @@ int type_file (char * file)
   }
   else if (status.type == T_DIR) // target berbentuk folder
   {
-    return dir; 
+	return dir; 
   }
   else  
     return salah;
@@ -39,14 +39,43 @@ int type_file (char * file)
 
  void rekursif (char * file)
  {
+ 	int fg;
+ 	fh = open (file,0); //bisa dibuka dan diedit
+ 	if (fh<0) //jika tidak dapat dibuka
+ 	{
+ 		printf("cant open the file %s \n",file);
+ 		return
+	}
+	char * chscanner;// untuk melihat akhiran dari source
+	struct dirent scanner;//melihat isidari sebuah folder
+	char temp_read [1024];//
+	while(read(fd,&scanner,sizeof(scanner))== sizeof(scanner))
+	{
+		strcpy(temp_read,file);
+		if (strcmp(scanner.d_name, ".") ==0 || strcmp(scanner.d_name, "..") ==0)	
+			continue;
+			
+		chscanner= temp_read + strlen(temp_read);
+    	if (*chscanner != '/') strcat(temp_read, "/");
+    	strcat(temp_read, scanner.d_name);
+    	
+		int test=test_dir (temp_read);
+    	
+		
+	
+	
+	
+	}
+	
    
 
 
  
    
  }
-int
-main(int argc, char *argv[])
+ 
+ 
+int main(int argc, char *argv[])
 {
   int i;
 
