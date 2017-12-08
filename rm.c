@@ -47,7 +47,7 @@ int type_file (char * file)
  		return
 	}
 	char * chscanner;// untuk melihat akhiran dari source
-	struct dirent scanner;//melihat isidari sebuah folder
+	struct dirent scanner;//melihat isi dari sebuah folder
 	char temp_read [1024];//
 	while(read(fd,&scanner,sizeof(scanner))== sizeof(scanner))
 	{
@@ -102,6 +102,5 @@ int main(int argc, char *argv[])
       break;
     }
   }
-
   sysexit();
 }
